@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUsers as setUsersReducer } from "../store/reducers/user";
 import axios from "axios";
 
-
 export default function User() {
     let {userId} = useParams();
 
