@@ -15,7 +15,7 @@ function Header() {
     const Disconect = () => {
         console.log('setAuth')
         // tokenInternal = useSelector(state => state.auth.token)
-        if(tokenInternal !== ""){
+        if (tokenInternal !== "") {
             dispatch(setAuth(""))
             // setToken("")
             navigate("/auth")
@@ -26,6 +26,7 @@ function Header() {
         setToken(tokenInternal)
     }, [tokenInternal])
 
+
     return (
         <header>
             <nav className="Header" >
@@ -34,8 +35,6 @@ function Header() {
                     <p><Link to="/UserList" >User List</Link></p>
                 </div>
                 <div>
-                    <p><Link to="/CreateUser" >Create user</Link></p>
-                    <p><Link to="/auth" >Login</Link></p>
                     {token !== "" ?
                         <p onClick={() => Disconect()}>Disconect</p>
                         : <></>
