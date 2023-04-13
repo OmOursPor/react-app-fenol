@@ -13,7 +13,7 @@ export default function Login() {
     
     const dispatch = useDispatch()
     let navigate = useNavigate();
-
+    
     const auth = () => {
         axios.post('http://82.65.6.187:8002/auth', {
             email: loginData.email,

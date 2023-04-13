@@ -18,28 +18,28 @@ export default function UserList() {
     
     return (
         <>
-        <TableContainer
-        variant="outlined"
-        >
-        <Table aria-label="demo table">
-            <TableHead>
-            <TableRow>
-                <TableCell>Id</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-            </TableRow>
-            </TableHead>
-            <TableBody>
-            {users?.map((user, i) => 
-            <TableRow>
-                <TableCell>{user.id}</TableCell>
-                <TableCell>{user.nickname}</TableCell>
-                <TableCell>{user.email}</TableCell>
-            </TableRow>
-            )}
-            </TableBody>
-        </Table>
-        </TableContainer>
+            <TableContainer
+            variant="outlined"
+            >
+            <Table aria-label="demo table">
+                <TableHead>
+                <TableRow>
+                    <TableCell>Id</TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Email</TableCell>
+                </TableRow>
+                </TableHead>
+                <TableBody>
+                {users?.map((user, i) => 
+                <TableRow>
+                    <TableCell>{user.id}</TableCell>
+                    <TableCell>{user.nickname}</TableCell>
+                    <TableCell>{user.email}</TableCell>
+                </TableRow>
+                )}
+                </TableBody>
+            </Table>
+            </TableContainer>
         </>    
     )
 }

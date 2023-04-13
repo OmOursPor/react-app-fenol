@@ -17,6 +17,7 @@ import { Provider } from 'react-redux'
 import store from './store/store'
 import CreateUser from './pages/CreateUser';
 import Login from './pages/Login';
+import Groupe from './pages/Groupe'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
@@ -29,6 +30,7 @@ root.render(
           <Route path="/" element={<App />} />
           <Route path="userList" element={<UserList />} />
           <Route path="createUser" element={<CreateUser />} />
+          <Route path="Groupe" element={<Groupe />} />
           <Route path="user/:userId" element={<User />} />
           <Route path="auth" element={<Login />} />
         </Routes>

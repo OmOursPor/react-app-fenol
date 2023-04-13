@@ -32,13 +32,15 @@ function Header() {
             <nav className="Header" >
                 <div>
                     <p><Link to="/" >Home</Link></p>
-                    <p><Link to="/UserList" >User List</Link></p>
                 </div>
                 <div>
+                    <p><Link to="/UserList" >User List</Link></p>
+                    <p><Link to="/Auth" >Login</Link></p>
+                    <p><Link to="/Groupe" >Groupe</Link></p>
                     {token !== "" ?
                         <p onClick={() => Disconect()}>Disconect</p>
                         : <></>
-                    }
+                    }    
                 </div>
             </nav>
         </header>
