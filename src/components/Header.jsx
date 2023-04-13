@@ -13,7 +13,7 @@ function Header() {
 
     const Disconect = () => {
         tokenInternal = useSelector(state => state.auth.token)
-        if(token !== ""){
+        if (token !== "") {
             dispatch(setAuth(""))
             setToken("")
         }
@@ -22,20 +22,23 @@ function Header() {
     useEffect(() => {
         setToken(tokenInternal)
     }, [tokenInternal])
-    
+
     return (
         <header>
             <nav className="Header" >
                 <div>
                     <p><Link to="/" >Home</Link></p>
-                    <p><Link to="/UserList" >User List</Link></p>
-                </div>        
+
+                </div>
                 <div>
-                    <p><Link to="/CreateUser" >Create user</Link></p>
-                    <p><Link to="/auth" >Login</Link></p>
                     {token !== "" ?
                         <p><Link onClick={() => Disconect} to="/auth">Disconect</Link></p>
-                        : <></>
+                        :
+                        <div>
+                            <p><Link to="/UserList" >User List</Link></p>
+                            <p><Link to="/auth" >Login</Link></p>
+                            <p><Link to="/CreateUser" >Register</Link></p>
+                        </div>
                     }
                 </div>
             </nav>
