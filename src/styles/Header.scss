@@ -1,0 +1,17 @@
+header {
+    display: flex;
+    justify-content: center;
+
+    nav {
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
+
+        div {
+            display: flex;
+            justify-content: space-between;
+            gap: 25px;
+
+        }
+    }
+}
