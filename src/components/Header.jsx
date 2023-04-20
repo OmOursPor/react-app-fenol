@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import '../styles/Header.scss'
 import { setAuth } from "../store/reducers/auth";
 import { useDispatch, useSelector } from "react-redux";
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 function Header() {
@@ -43,6 +43,8 @@ function Header() {
                     }    
                 </div>
             </nav>
+
+     
         </header>
     )
 }

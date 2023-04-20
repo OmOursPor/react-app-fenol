@@ -1,7 +1,10 @@
-import Header from "./components/Header";
 import './App.scss'
+import Modal from 'react-modal';
 
 function App() {
+
+  Modal.setAppElement('#root');
+  
   return (
     <>
       <div className="App">

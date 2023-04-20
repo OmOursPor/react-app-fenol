@@ -5,6 +5,8 @@ import '../styles/Login.scss'
 import { setAuth } from "../store/reducers/auth";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function Login() {
@@ -25,6 +27,7 @@ export default function Login() {
             navigate("/");
           })
           .catch(function (error) {
+            toast.error('Erreur de permission');
             console.log(error.message);
           });
     }
@@ -35,6 +38,7 @@ export default function Login() {
             <TextField variant="outlined" label="password" type="password" value={loginData.password} onChange={(event) => setLoginData({...loginData, "password": event.target.value})} />
 
             <Button variant="outlined" type="button" onClick={auth}> Créer utilisateur </Button>
+            <ToastContainer />
         </section>
     )
 }
