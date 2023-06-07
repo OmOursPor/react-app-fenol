@@ -4,6 +4,12 @@
     align-items: center;
     gap: 20px;
 
+    > div {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
     Button {
         margin: 20px;
     }
@@ -14,6 +20,7 @@
     border-radius: 15px;
     padding: 50px;
     position: fixed;
+    background-color: white;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

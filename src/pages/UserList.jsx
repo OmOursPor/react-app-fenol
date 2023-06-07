@@ -9,7 +9,7 @@ export default function UserList() {
     
 
     useEffect(() => {
-        axios.get('http://82.65.6.187:8002/api/users')
+        axios.get(`${window.baseUrl}api/users`)
             .then(function (response) {
                 setUsers(response.data["hydra:member"])
             })
@@ -31,7 +31,7 @@ export default function UserList() {
                 </TableHead>
                 <TableBody>
                 {users?.map((user, i) => 
-                <TableRow>
+                <TableRow key={user.id}>
                     <TableCell>{user.id}</TableCell>
                     <TableCell>{user.nickname}</TableCell>
                     <TableCell>{user.email}</TableCell>

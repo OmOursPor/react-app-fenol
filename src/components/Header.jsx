@@ -4,27 +4,32 @@ import { setAuth } from "../store/reducers/auth";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import ProtectedRoutes from "../Middleware/ProtectedRoutes";
 
 function Header() {
 
-    const [token, setToken] = React.useState("")
+    let protectedRoutes = ProtectedRoutes()
+
+    const [token, setToken] = React.useState("")    
+    const [currentUser, setCurrentUser] = React.useState()
+    console.log(currentUser)
     const dispatch = useDispatch()
     let tokenInternal = useSelector(state => state.auth.token)
+    let currentUserInternal = useSelector(state => state.curentUserInfo.curentUserInfo)
     let navigate = useNavigate();
+    console.log(currentUserInternal)
 
     const Disconect = () => {
-        console.log('setAuth')
-        // tokenInternal = useSelector(state => state.auth.token)
         if (tokenInternal !== "") {
             dispatch(setAuth(""))
-            // setToken("")
             navigate("/auth")
         }
     }
 
     useEffect(() => {
         setToken(tokenInternal)
-    }, [tokenInternal])
+        setCurrentUser(currentUserInternal)
+    }, [tokenInternal, currentUserInternal])
 
 
     return (
@@ -37,8 +42,10 @@ function Header() {
                     <p><Link to="/UserList" >User List</Link></p>
                     <p><Link to="/Auth" >Login</Link></p>
                     <p><Link to="/Groupe" >Groupe</Link></p>
-                    {token !== "" ?
+                    {token !== "" ? <>
                         <p onClick={() => Disconect()}>Disconect</p>
+                        <Link to="/Profile"></Link>
+                    </>
                         : <></>
                     }    
                 </div>

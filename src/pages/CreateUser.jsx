@@ -10,7 +10,7 @@ export default function CreateUser() {
     
 
     const post = () => {
-        axios.post('http://82.65.6.187:8002/api/users', {
+        axios.post(`${window.baseUrl}/api/users`, {
             email: user.email,
             plainPassword: user.plainPassword,
             nickname: user.nickname

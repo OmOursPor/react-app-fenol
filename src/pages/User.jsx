@@ -14,7 +14,7 @@ export default function User() {
     const userInternal = useSelector(state => state.user.users)
 
     const retrieveUsers = async () => {
-        let response = await axios.get(`${url}api/users`, {params: {page: 5}})
+        let response = await axios.get(`${window.baseUrl}api/users`, {params: {page: 5}})
         let usersTmp = response.data["hydra:member"]
         dispatch(setUsersReducer(usersTmp))
         setUsers(usersTmp)

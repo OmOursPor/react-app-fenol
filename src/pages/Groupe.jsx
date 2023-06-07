@@ -6,15 +6,21 @@ import "../styles/Groupe.scss"
 import { useNavigate } from "react-router-dom";
 import ReactModal from 'react-modal';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import GroupeRequest from "../components/GroupeRequest";
 
 export default function Groupe() {
 
     const [newGroupeData, setNewGroupeData] = useState({"name": "", "description": ""})
     const [groups, setGroups] = useState()    
-    const [users, setUsers] = useState()    
+    const [users, setUsers] = useState() 
+    const [currentGroup, setCurrentGroup] = useState({"@id": "", "@type": "", "name": "", "owner": "", "description": ""})
 
     let tokenInternal = useSelector(state => state.auth.token);
     let navigate = useNavigate();
+
+
 
     // gérer la popUp create BEGIN
     const [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -31,8 +37,9 @@ export default function Groupe() {
     // gérer la popUp create BEGIN
     const [isJoinOpen, setIsJoinOpen] = useState(false);
 
-    const handleOpenJoinModal = () => {
+    const handleOpenJoinModal = (group) => {
       setIsJoinOpen(true);
+      setCurrentGroup(group)
     }
 
     const handleCloseJoinModal = () => {
@@ -40,8 +47,20 @@ export default function Groupe() {
     }
     // gérer la popUp create END
 
+    // gérer la popUp groupe request BEGIN
+    const [isGroupeRequestOpen, setIsGroupeRequestOpen] = useState(false);
+
+    const handleOpenGroupeRequestModal = () => {
+      setIsGroupeRequestOpen(true);
+    }
+
+    const handleCloseGroupeRequestModal = () => {
+      setIsGroupeRequestOpen(false);
+    }
+    // gérer la popUp groupe request END
+
     const createGroupe = () => {
-        axios.post('http://82.65.6.187:8002/api/groups', {
+        axios.post(`${window.baseUrl}/api/groups`, {
             name: newGroupeData.name,
             description: newGroupeData.description
           }, { headers: {
@@ -56,8 +75,25 @@ export default function Groupe() {
           });
     }
 
+    const joinGroup = (targetGroup) => {
+      axios.post(`${window.baseUrl}/api/group_requests`, {
+        targetGroup: targetGroup
+      }, { headers: {
+        Authorization: `Bearer ${tokenInternal}`
+      }})
+      .then(function (response) {
+        console.log(response)
+        toast.success("Demande envoyer avec success");
+      })
+      .catch(function (error) {
+        toast.error("Erreur lors de l'envoie de la demande");
+        console.log(error.message);
+      });
+      handleCloseJoinModal()
+    }
+
     useEffect(() => {
-      axios.get('http://82.65.6.187:8002/api/groups')
+      axios.get(`${window.baseUrl}api/groups`)
         .then(function (response) {
           setGroups(response.data["hydra:member"])
           console.log(response.data["hydra:member"])
@@ -67,7 +103,10 @@ export default function Groupe() {
     return(
       <>
         <section className="Groupe">
-            <Button variant="outlined" type="button" onClick={handleOpenCreateModal}> Créer un groupe </Button>
+            <div>
+              <Button variant="outlined" type="button" onClick={handleOpenCreateModal}> Créer un groupe </Button>
+              <Button variant="outlined" type="button" onClick={handleOpenGroupeRequestModal}> Demande de groupe </Button>
+            </div>
             <TableContainer
             variant="outlined"
             >
@@ -80,7 +119,7 @@ export default function Groupe() {
                 </TableHead>
                 <TableBody>
                 {groups?.map((group, i) => 
-                <TableRow key={"groupRow"+i} onClick={handleOpenJoinModal}>
+                <TableRow key={"groupRow"+i} onClick={() => handleOpenJoinModal(group)}>
                     <TableCell>{group.name}</TableCell>
                     <TableCell>{group.description}</TableCell>
                 </TableRow>
@@ -107,6 +146,7 @@ export default function Groupe() {
             </div>
         </ReactModal>    
 
+        {/* Modale créer un groupe */}
         <ReactModal
           isOpen={isJoinOpen}
           className="GroupeModal"
@@ -115,11 +155,44 @@ export default function Groupe() {
           appElement={document.getElementById('root')}>
             <div className="JoinGroup">
               <h3>Rejoindre ce groupe</h3>
-              <p>Info sur le groupe en question</p>
               
-              <Button variant="outlined" type="button" onClick={createGroupe}> Rejoindre le group </Button>
+              <p>Nom du groupe : <strong>{currentGroup.name}</strong></p>
+              <p>Description du groupe : <strong>{currentGroup.description}</strong></p>
+              <p>Chef du groupe : <strong>{currentGroup.owner}</strong></p>
+              
+              <Button variant="outlined" type="button" onClick={() => joinGroup(currentGroup["@id"])}> Rejoindre le group </Button>
             </div>
         </ReactModal>    
+
+        {/* Modale rejoindre un groupe */}
+        <ReactModal
+          isOpen={isJoinOpen}
+          className="GroupeModal"
+          onRequestClose={handleCloseJoinModal}
+          contentLabel="Join group"
+          appElement={document.getElementById('root')}>
+            <div className="JoinGroup">
+              <h3>Rejoindre ce groupe</h3>
+              
+              <p>Nom du groupe : <strong>{currentGroup.name}</strong></p>
+              <p>Description du groupe : <strong>{currentGroup.description}</strong></p>
+              <p>Chef du groupe : <strong>{currentGroup.owner}</strong></p>
+              
+              <Button variant="outlined" type="button" onClick={() => joinGroup(currentGroup["@id"])}> Rejoindre le group </Button>
+            </div>
+        </ReactModal>    
+
+        {/* Modale demande de groupe */}
+        <ReactModal
+          isOpen={isGroupeRequestOpen}
+          className="GroupeModal"
+          onRequestClose={handleCloseGroupeRequestModal}
+          contentLabel="Groupe request"
+          appElement={document.getElementById('root')}>
+            <GroupeRequest/>
+        </ReactModal>    
+
+        <ToastContainer/>       
       </>
 
 
